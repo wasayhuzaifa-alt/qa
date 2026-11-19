@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live Q&amp;A</title>
+
+<!-- Link preview (shows when the link is shared/pasted). Edit these. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Live Q&A: ask your questions">
+<meta property="og:description" content="Submit your questions for the speaker.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Live Q&A: ask your questions">
+<meta name="twitter:description" content="Submit your questions for the speaker.">
+
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:#fff; font-family:system-ui,-apple-system,sans-serif; }
+  #start {
+    height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:1.5rem; padding:2rem; text-align:center; color:#111;
+  }
+  #start h1 { margin:0; font-size:1.6rem; font-weight:600; }
+  #btn {
+    font-size:1.1rem; font-weight:600; padding:1rem 2rem; border:0; border-radius:999px;
+    background:#1a73e8; color:#fff; cursor:pointer;
+  }
+  #btn:active { transform:scale(.97); }
+  #v {
+    display:none; position:fixed; inset:0; width:100%; height:100%;
+    object-fit:contain; background:#000;
+  }
+</style>
+</head>
+<body>
+
+<div id="start">
+  <h1>Live Q&amp;A</h1>
+  <button id="btn">Click to ask questions</button>
+</div>
+
+<!-- preload="none" so nothing loads or shows until the button is clicked -->
+<video id="v" playsinline preload="none"></video>
+
+<script>
+  var VIDEO_FILE = "rickroll.mp4";
+  var FALLBACK_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+  var v = document.getElementById("v");
+  var start = document.getElementById("start");
+  var btn = document.getElementById("btn");
+
+  btn.addEventListener("click", function () {
+    v.src = VIDEO_FILE;
+    v.style.display = "block";
+    start.style.display = "none";
+    v.muted = false;
+    v.play().catch(function () { location.replace(FALLBACK_URL); });
+    if (v.requestFullscreen) { v.requestFullscreen().catch(function () {}); }
+  });
+
+  // If the video file can't load, fall back to YouTube.
+  v.addEventListener("error", function () { location.replace(FALLBACK_URL); });
+</script>
+</body>
+</html>
